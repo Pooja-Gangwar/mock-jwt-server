@@ -1,0 +1,16 @@
+version: '3'
+services:
+  ansible:
+    image: ansiblecontainername
+    container_name: ansible-with-jwt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: sleep
+    command: infinity
+    volumes:
+      - .:/usr/app/src
+    expose:
+      - "8082"
+    ports:
+     - 8082:8080
