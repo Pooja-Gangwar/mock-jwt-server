@@ -3,21 +3,17 @@ FROM python:latest
 
 LABEL Maintainer="Pooja Gangwar"
 
-RUN python3 -m venv .env
+# RUN python3 -m venv .env
 
-RUN pip install -U pip
-RUN pip install pyjwt[crypto]
-RUN pip install pipenv
-RUN pipenv install pyjwt
-RUN pipenv install cryptography
-
+RUN python3 -m venv .env && \
+    pip install -U pip && \
+    pip install pyjwt[crypto] && \
+    pip install pipenv && \
+    pipenv install pyjwt && \
+    pipenv install cryptography
 
 WORKDIR /usr/app/src
 
-# COPY jwt-generator.py jwt-velidator.py ./
-COPY . .
-
-
-RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout private_key.pem -out public_key.pem -subj "/CN=jwt-tutorial"
-
+# RUN chmod +x keys.sh
+# RUN ./keys.sh
 CMD [ "python3", "./jwt-generator.py"]

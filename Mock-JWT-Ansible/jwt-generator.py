@@ -1,4 +1,5 @@
 import jwt
+import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 from cryptography.hazmat.primitives import serialization
@@ -20,6 +21,8 @@ def generate_jwt():
     )
 
     return jwt.encode(payload=payload, key=private_key, algorithm="RS256")
+
+subprocess.call(["./keys.sh"])
 
 print(generate_jwt())
 f = open("token.txt", "w+")
