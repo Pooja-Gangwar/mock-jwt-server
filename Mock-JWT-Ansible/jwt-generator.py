@@ -13,16 +13,12 @@ def generate_jwt():
         "aud": "https://www.conjur.org/",
         "iat": now,
         "exp": (now + timedelta(hours=24)).timestamp(),
+        "scope": "openid"
     }
 
-    private_key_text = Path("private_key.pem").read_text()
-    private_key = serialization.load_pem_private_key(
-        private_key_text.encode(), password=None
-    )
+    return jwt.encode(payload=payload, key="secret_key", algorithm="HS256")
 
-    return jwt.encode(payload=payload, key=private_key, algorithm="RS256")
-
-subprocess.call(["./keys.sh"])
+# subprocess.call(["./keys.sh"])
 
 print(generate_jwt())
 f = open("token.txt", "w+")
